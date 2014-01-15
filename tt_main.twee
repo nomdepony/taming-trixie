@@ -1,0 +1,283 @@
+:: Start
+
+[[New Game]] <<if $skip_intro>>([[Skip Intro|Training]])<<endif>>
+
+[[Endings Gallery]]
+
+[[Credits]]
+
+Note: Firefox/Chrome/IE9+ needed for full support.
+<<display initial_setup>>
+
+:: Credits
+Created using:
+Twine - http://twinery.org/
+SugarCube - http://www.motoslave.net/sugarcube/
+
+Inspirations:
+Slave Maker
+The Rance series
+Violated Heroine
+Corruption of Champions
+
+Thanks for:
+Various game ideas - /mlp/
+Bark the Diamond Dog - Anonymous
+Being my muse - Name withheld
+<<back>>
+
+:: trixie_description [nobr]
+<<if $hope>>
+	<<set $temperament = "She has an angry look in her eyes.">>
+<<elseif not $mindbreak_major and not $mindbreak_two>>
+	<<set $temperament = "She has a dejected look in her eyes.">>
+<<else>>
+	<<set $temperament = "She has a submissive look in her eyes.">>
+<<endif>>
+<<Trixie>> stands in your basement. Her left rear leg is shackled, and the connected chain runs over to a ring in the wall. The blue-maned unicorn is wearing nothing<<if not $savage>>, and her wand and moon cutie mark stands out on her azure coat.<<else>>, and the various bruises running over her body stand out on her azure coat. She has a wand and moon cutie mark on her haunches.<<endif>> <<print $temperament>>
+<br><br>
+Will: <<print $will>> Health: <<print $health>>
+<<unset $temperament>>
+
+
+:: Morning Choices [nobr]
+<h2>Day <<print $day>> - Morning</h2>
+
+%text about morning, check for special events<br><br>
+<<if $weekend>>It's the weekend. If you skip Trixie's lessons today, you can travel to Canterlot.<br>
+<<elseif $day eq 8>>You need to start working again. You won't have as much time to train Trixie, except on the weekends.<br>
+<<elseif $day gt 8 and not $weekend>>You need to work today, unfortunately.<br><<endif>>
+<<if $day eq 29>>%text Pervert Noble is coming tonight<<if $saddle_visits gt 0>>, as is Arab Trader,<<endif>> to look at Trixie and perhaps make an offer for her.<br><<endif>>
+<<if $day eq 30>>%text Diamond Dog slaver is coming tonight to look at Trixie. He'll definitely make an offer for her. Or you could keep her for yourself.<br><<endif>> 
+
+<<if $hope and $day eq 5>>[[A guardpony opens the door|Rescue]]
+<<else>>
+    <<if $mind.hope>>[[A guardpony opens the door|Rescue]]<br><<endif>>
+    [[No one opens the door today|Skip Day]]<br>
+    [[Silver Shackle opens the door|MorningReaction]]
+<<endif>>
+
+
+:: MorningReaction
+
+%text what trixie does when you enter. if something was set for $overnight, handle that.
+
+[[Training]]
+
+
+:: Skip Day
+<h2>Day <<print $day>> - Not Training</h2>
+<<if $weekend>>/
+[[Canterlot]]<br>/
+<<if $tirek_visits != -1>>[[Visit the Cult of Tirek|The Cult of Tirek][$brought_trixie = false]]<br><<endif>>/
+<<if $tirek_visits gte 1>>[[Visit the Cult of Tirek and bring Trixie|The Cult of Tirek][$brought_trixie = true]]<br><<endif>>/
+<<endif>>/
+[[Sleep]]
+
+
+:: Rescue
+%text haha it's actually me, i'm a guard who faked your death. no hope.
+[[Back to Training|Training]]
+<<set $mind.hope = false>>
+
+:: time_passed [nobr]
+<<set $actions -= 1>>
+<<set $action_taken = false>>
+/% set $message depending on Trixie's state %/
+
+:: Training
+<h2>Day <<print $day>> - Training</h2><<if $action_taken>><<display time_passed>><<endif>>
+<h4>Actions left: <<print $actions>></h4>
+<<display trixie_description>>
+<<if $message>><<print $message>><<endif>>\
+
+Feed Trixie - Heal Trixie - Clean Trixie - Talk to Trixie
+Punish Trixie - Molest Trixie - Sex Toys - Bondage
+Fuck Trixie - Get Oral - Take Anal - Special Items
+
+
+<<if $actions gt 0>>[[Wait|Training][$action_taken = true]]
+[[Pass for today|Cleanup]]<<else>>[[Time's up|Cleanup]]<<endif>>
+
+[[Give Up]]
+
+<<if $debug>>
+Debug Options: [[Set Will]] - [[Set Training]] - [[Set Skill]]
+[[Heal Trixie|Training][$health = 100]] - [[Reset Actions|Training][$actions = 6]]
+<<endif>>
+<<unset $message>>
+
+
+:: Cleanup
+% maybe choose a final order for trixie while you're gone?
+[[EveningReaction]]
+
+
+:: EveningReaction
+%text what trixie does as you leave
+sanity check?
+
+[[Evening Choices]]
+
+
+:: Evening Choices
+<h2>Day <<print $day>> - Evening</h2>
+% text about evening, check for special nighttime things
+<<if $day eq 29 or $day eq 30>>You hear a knock on the door. It's time to bring Trixie out.<br><<endif>>\
+
+<<if $day eq 29>>[[Open door|day29_sale]]<br><<elseif $day eq 30>>[[Open door|day30_sale]]<br>[[Decide to keep Trixie|ENDKeepHer]]<br><<endif>>\
+[[Sleep]]
+<<if $debug>>[[Skip to the end|Sleep][$day = 28]]<<endif>>
+/% Tirek cult comes and visits  %/
+
+:: Sleep [savenow cansave]
+<h2>Day <<print $day>> - Sleep</h2>
+%text about you sleeping like a baby or random text
+maybe dream tips, red herrings
+<<nobr>>
+<<set $next = "Morning Choices">>
+<<set $day += 1>>
+<<set $weekend = false>>
+<<if $day in {6:6, 7:7, 13:13, 14:14, 20:20, 21:21, 27:27, 28:28}>>
+    <<set $weekend = true>>
+    <<set $actions = 5>>
+<<elseif $day lt 6>>
+    <<set $actions = 6>>
+<<else>>
+    <<set $actions = 5>>
+<<endif>>
+<<if $day eq 31>>
+    <<set $next = "ENDTooLong">>
+<<endif>>
+/% <<will_calculation>> %/
+<<endnobr>>
+[[In the morning...|$next]]
+<<unset $next>>
+
+:: noteMain
+Below here is broken.
+
+
+:: oldSleep [savenow cansave]
+<h2>Day <<print $day>> - Sleep</h2>
+%text about you sleeping like a baby or random text
+maybe dream tips, red herrings
+<<nobr>>
+<<set $hunger -= 10>>
+%%% if there's food and hunger or weight is low, eat
+<<if $food>>
+    <<set $will_eat = 0>>
+    <<if $weight lt 20>>
+        <<set $will_eat += 2>>
+    <<elseif $weight lt 50>>
+        <<set $will_eat += 1>>
+    <<endif>>
+    <<set $will_eat += Math.max(0, Math.round(($hunger - 40)/20))>>
+    <<if $pride gte 75>><<set $will_eat -= 1>><<endif>>
+    <<set $will_eat = Math.min(0, $will_eat)>>
+    <<set $eat = Math.min($food, $will_eat)>>
+    <<set $hunger += $eat * 10>>
+    <<set $food -= $eat>>
+    <<set $pride -= $eat * 2>>
+<<endif>>
+<<if $hunger lt 20>>
+    <<set $weight -= 15>>
+    <<set $health -= 6>>
+<<elseif $hunger lt 40>>
+    <<set $weight -= 10>>
+    <<set $health -= 3>>
+<<elseif $weight lt 60>>
+    <<set $weight -= 5>>
+    <<set $health += 5>>
+<<elseif $hunger lt 80>>
+    <<set $health += 10>>
+<<elseif $hunger lt 100>>
+    <<set $health += 10>>
+    <<set $weight += 5>>
+<<elseif $hunger lt 120>>
+    <<set $health += 10>>
+    <<set $weight += 10>>
+<<else>>
+    <<set $health += 10>>
+    <<set $weight += 15>>
+<<endif>>
+
+<<set $health = Math.min($health, 100)>>
+<<set $hunger = Math.min($hunger, 100)>>
+<<set $weight = Math.min($weight, 250)>>
+
+<<if $weight lte 0 or $health lte 0>>
+    <<set $next = "BADENDDuringTheNight">>
+<<elseif $day eq 31>>
+    <<set $next = "ENDTooLong">>
+<<endif>>
+/% <<will_calculation>> %/
+<<endnobr>>
+[[In the morning...|$next]]
+<<unset $next>>
+
+:: day29_sale
+%open the door, it's noble pervert and potentially arab trader.
+will turn back, no sale if mindless, except for lust mindless for noble.
+noble pervert: will buy her as:
+sex slave (must be broken twice, sex trained. more for beaten, broken, training, damaged horn, lust piercing/mindless, docked. less for fat, not fully broken.)
+mistress, used to rein in other sex slaves. must be healthy, not too beaten, prideful, sex trained. plus for horn, docked, lust piercing, slender, less for chub/fat.
+saddle arab, if present, will buy her for:
+prostitute. must be fully broken, good sex training, healthy, not too beaten. more for horn, chubby, lust piercing, less for beating, docked.
+consort. full broken, best sex training, healthy, pride, never beaten, no lust piercing, horn cut, not branded, not docked, not lust pierced, not fat, not skinny, little more for chub. best sold ending.
+achievement for selling to trader - Sold A Broad.
+
+<<if not $mindbreak_two>>
+%not broken, try again
+<<if $mindless and $mindless neq "lust">>
+%gross, useless, suggest you kill her
+<<endif>>
+
+<<if $mindless eq "lust" and $mindbreak_two>>\
+    [[Noble buys as sex slave|GOODENDSexSlaveSold]]<br>\
+<<else if not $mindless and $mindbreak_two>>\
+    [[Noble buys as sex slave|GOODENDSexSlaveSold]]<br>\
+    <<if $health gte 25 and $mindbreak_major and $savage_beating lt 3 and $pride gte 30>>\
+    [[Noble buys as slave mistress|GOODENDMistressSold]]<br><<endif>>\
+    <<if $saddle_visits gt 0>>\
+        <<if $mindbreak_major and $savage_beating lte 1 and $health gte 50>>\
+        [[Trader buys as prostitute|GOODENDForeignProstitute]]<br><<endif>>\
+        <<if $mindbreak_major and not $savage_beating and $health gte 75 and $pridge gte 60 and $horn_damage eq "cut" and not $tail_docked and not $branded>>\
+        [[Trader buys as consort|GOODENDForeignConsort]]<br><<endif>>\
+    <<endif>>
+<<endif>>
+
+[[No sale|Sleep]]
+
+:: day30_sale
+%open the door, it's Bark the diamond dog slaver. he will always offer to buy her.
+endings:
+food, always available. good if fat, less for unhealthy, skinny, only mindless option.
+cartpony, doesn't need horn, not fully broken, healthy, not too beaten. magic brand good, markless good, plus for docked.
+diamond finder, needs horn, broken, healthy, not beaten more than once. magic brand/markless good, docked good. best diamond dog ending.
+
+[[Sell her for food|BADENDFood]]
+<<if $mindbreak_two and $health gte 50 and $savage_beating lt 3>>[[Sell her to pull cart|GOODENDCartPony]]<br><<endif>>\
+<<if $mindbreak_major and $health gte 50 and $savage_beating lt 2 and not $horn_damage>>[[Sell her to find gems|GOODENDGemHunter]]<br><<endif>>\
+
+[[No sale|Sleep]]
+[[Decide to keep Trixie|ENDKeepHer]]
+
+
+:: Set Will [debug]
+[[Set to starting will - will refuse everything|Training][$will = 500]]
+[[Set to lower will - will refuse oral request, give in to demand|Training][$will = 300]]
+[[Set to low will - will give in to everything|Training][$will = 150]]
+
+::Set Skill [debug]
+[[Restore oral virginity|Training][$oral_training = 0]]
+[[Starting to get good at it|Training][$oral_training = 10]]
+[[Gives good head|Training][$oral_training = 25]]
+[[Deepthroats like a pro|Training][$oral_training = 50]]
+
+:: Set Training [debug]
+[[Hope, not tamed|Training][$hope = true, $mindbreak_one = false, $mindbreak_two = false, $mindbreak_major = false]]
+[[No hope, not tamed|Training][$hope = false, $mindbreak_one = false, $mindbreak_two = false, $mindbreak_major = false]]
+[[No hope, a bit tamed|Training][$hope = false, $mindbreak_one = true, $mindbreak_two = false, $mindbreak_major = false]]
+[[No hope, half-way tamed|Training][$hope = false, $mindbreak_one = true, $mindbreak_two = true, $mindbreak_major = false]]
+[[No hope, fully tamed|Training][$hope = false, $mindbreak_one = true, $mindbreak_two = true, $mindbreak_major = true]]

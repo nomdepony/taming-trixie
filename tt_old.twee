@@ -1,0 +1,264 @@
+﻿:: New Game
+
+%text where you talk about your many reasons for kidnapping trixie
+revenge
+lust
+power
+selling her
+
+%text where you look at the horn ring that blocks her power and stealths her
+for at least 30 days. bought it from Noble Rot, winemaker and pervert. you also
+have a tranq. you could throw it into her wagon and drag her out. do you?
+
+if you say 	
+
+%text where you kidnap trixie and drag her back, making it clear you make a stop
+to do something else not described yet.
+
+[[Drag Trixie into the chamber|Trixie's new home]]
+
+<<nobr>>
+<<set $debug = true>>
+
+<<endnobr>>
+
+
+:: notusing
+idea: stamina instead of actions, so small actions have small cost, big actions or orgasms cost big.
+idea: ss lust, to track whether he comes or not.
+idea: shorten game to 21 days, as too many actions required for full 30 days.
+idea: offer to give her things in exchange for obedience. why: more complex, and doesn't match theme of compelled obedience.
+Bite Trixie - ears, teats, clit
+
+
+:: devnotesideas
+<<set $sexual_assault = false; $lied = 0; $honest = 0; $happiness = 25; $loneliness = 20; $brand = false; $cm_magic = false; $incest = 0; $saddle_sale = false; $horn_cutter = false; $lust_piercings = false; $blindfold = false; $spreader=false; $gag=false; $dildo = false; $vibe = false; $vibe_anal = false; $tail_docked = false; $septum = false; $tail_wrapped = false; $tail_length="long"; $mane_cut = false; $oral_training = 0; $vag_training = 0; $anal_training = 0>>
+filth - vomit if sick, unable to eat.
+will keep clean a little, won't if very sick/hungry, or low pride without balancing obedience
+sleep - sleep deprivation
+
+basic gameplay:
+every day, trixie replenishes her will. breaking her will allows training, which weakens will in the future, which allows you to mindbreak her.
+three mindbreaks, two minor, one major, and you win.
+
+lust
+libido - speed of lust gain
+
+endings: tack on pregnancy possiblity in some endings
+pregnancy pills - minor break for impregnation?
+cum pills - increases ejactulation amount, number
+had other ideas for items, have Noble Pervert sell them.
+
+idea: rage break - so angry at you she loses her mind - biting, kicking, screaming - good only for food.
+idea: game starts with player choosing to kidnap her. can turn it down and go home. make them complicit.
+idea: counter for days abandoned, days starving
+
+
+idea: slave trader brings slave mare in to teach trixie about lesbian pleasures. special encounter? special ending reward? one night rental?
+ you can rent slave trader's help, watch her slave fuck trixie then mutually masturbate with the slaver.
+idea: you can come once a day, which enables certain actions or boosts others. 2 with the right pill.
+
+ idea: master, sir or other choice when she breaks.
+
+idea: it may be also nice too to have the possibility to also give HER a slut name. Like Slave or Cumslut towards the end, since she always refered to herself with the third person it'd fit for once.
+
+Anonymous: Well, I'm not sure if you'd want to put some of the cast it in (what with the "it does not match the theme" you said before) but yeah, I wasn't thinking of actually buying her, more like you rent her for a night and use it to perform all the act you want on Trixie + threesome or "voyeur" if you do it in front of her.
+If I were to suggest even more and push it to the max you could even have different kind of slaves to kinda match her various stages. So you could have the expensive being, like, Fluttershy or a Fluttershy like slaves who'd be nice and gentle and saying kind word as she make love to her, whatever Trixie's attitude is, and then you'd have a cheap, Rainbow Dash like that'd be rebellious like Trixie at the start, to the point where you'd have to threaten both to force them to have sex with each other at the start.
+
+No special items today, as instead chose to implement counters for sadistic and loving actions. High scores will unlock new options and control ending results.
+
+Also introduced concept of will, which replenishes every morning back to a level determined by stats and modified by training. Gameplay will be based around breaking her will, which allows training, which weakens will in the future. Low will and stats allow you to mindbreak her. Two minor mindbreaks and one major mindbreak and she is tamed.
+
+Also started planned split of training actions into requests, demands and forced. Using oral as testbed.
+
+Requests can be denied based on will, which hurt training, but give best results if accepted.
+
+Demands can be fought against, but are more likely to be accepted, as punishments follow if rejected. Or if whim strikes player.
+
+Forced has lowest training results, but best impact on will. Overuse may block best ends.
+
+
+:: will_calculation [nobr]
+<<set $will = $pride + $health + $hunger + $hate - ($obedience + $love)>>
+<<if $hope>><<set $will += 50>><<endif>>
+<<if $virgin>><<set $will += 25>><<endif>>
+<<if $mindbreak_one>>
+    <<set $will -= 25>>
+<<endif>>
+<<if $mindbreak_two>>
+    <<set $will -= 25>>
+<<endif>>
+<<if $mindbreak_major>>
+    <<set $will = 0>>
+<<endif>>
+
+:: Trixie's new home
+
+%text describing the chamber - 30x30, high ceiling with rings, chain and shackle in far corner, sink and grate
+bunch of sex toys, bdsm tools on side of chamber with door, out of reach of chain
+shackle her to chain, open box with glowing gold ring - good for at least 30 days of magic stopping and stealth
+so can't be found
+place it on her, wake her up
+explain her new place now
+
+she scoffs, complains about everything, says she'll be rescued. not likely.
+
+[[Start Trixie's training|Preparation]]
+
+<<silently>>
+<<will_calculation>>
+<<endsilently>>
+
+:: description_notes
+%weight
+0 death
+1-19 skeletal 20
+20-49 skinny 30
+50-89 slender 40
+90-139 normal 50
+140-179 little plump 40
+180-209 chubby 30
+210-250 fat
+%hungry
+0-19 starving
+20-39 very hungry
+40-59 hungry
+60-79 not hungry
+80-100 full
+
+:: trixie_description
+%bunch of ifs text to give an explanation of what she looks like, stats, etc.
+uses in display
+<<if $gag>>A ballgag is stuck in her mouth, silencing her. <<endif>>\
+<<if $blindfold>>She has a blindfold covering her eyes. <<endif>>\
+<<if $spreader>>Her hind legs are spread wide by a bar connected to the shackles. <<endif>>\
+<<if $food eq 0>>An empty dogfood bowl sits near the faucet.<<else if $food gt 0>>A dogfood bowl sits near the faucet, full of <<$food>> days of kibble.<<endif>>
+<<if $debug>>
+"Flags"
+Weekend: <<$weekend>> Hope: <<$hope>> Virgin: <<$virgin>> Mindless: <<$mindless>> Horn Damage: <<$horn_damage>> Docked: <<$tail_docked>>
+Spreader: <<$spreader>> Gag: <<$gag>> Blindfold: <<$blindfold>>
+"Stats"
+Will: <<$will>>
+Health: <<$health>> Pride: <<$pride>> Hate: <<$hate>> Obed.: <<$obedience>> Love: <<$love>>
+Sanity: <<$sanity>> Hunger: <<$hunger>> Weight: <<$weight>>
+"Counters"
+Food: <<$food>> Bits: <<$bag_of_bits> Assault: <<$assault>> Savage: <<$savage>>
+Mindbreak: <<$mindbreak_one>> <<$mindbreak_two>> <<$mindbreak_major>>
+<<endif>>
+
+:: food_options
+<<silently>>The parameter is <<print parameter(0)>><<set $back=parameter(0)>><<endsilently>>
+<<if $food lte -1>>
+[[Set out Trixie's food bowl|$back][$food = 0]]
+<<else>>
+[[Take away Trixie's food bowl|$back][$food = -1]]
+[[Put more kibble down|$back][$food += 1]]<<endif>>
+
+:: equipment_options
+<<silently>><<set $back=parameter(0)>><<endsilently>>
+<<if $gag>>[[Remove gag|$back][$gag = false]]<<else>>[[Put gag in|$back][$gag = true]]<<endif>>
+<<if $blindfold>>[[Remove blindfold|$back][$blindfold = false]]<<else>>[[Put blindfold on|$back][$blindfold = true]]<<endif>>
+<<if $spreader>>[[Take off spreaderbar|$back][$spreader = false]]<<else>>[[Put spreaderbar on|$back][$spreader = true]]<<endif>>
+
+:: Preparation
+<h2>Day <<$day>> - Preparation</h2>
+<<display trixie_description>>
+
+[[Training]]
+
+:: ExampleTraining
+<h2>Day 2 - Training</h2>
+<h4>Actions left: 2</h4>
+
+Feed Trixie - Heal Trixie - Clean Trixie - Talk to Trixie
+Punish Trixie - Molest Trixie - Sex Toys
+Bondage
+Fuck Trixie - Get Oral - Take Anal
+Special Items
+
+Stages 1 - hope 2 - no hope 3 - mindbroken 1 4 - mindrbroken 2 5 - game over
+
+
+
+
+
+
+
+
+
+
+Feed Trixie:
+Normal meal - day's nutrition, nothing for S1,2 unless starving, then gains affection
+Meager meal - will make her slender but not starve, same deal
+Stuff her - used to make her fat, she'll fight against it, doesn't work if starving.
+Force her to eat out of bowl - she'll fight against it, degrading
+if sadistic:
+Come on food, force her to eat - very degrading, she'll fight against it
+Piss in bowl, force her to drink it - very very degrading, she'll fight against it
+
+Heal Trixie:
+Heal her wounds
+
+Clean Trixie:
+Pamper her - raises pride, cleans her off very well
+Clean her - just regular treatment, plus to affection
+Hose her - some cleaning, degrading
+
+Talk to Trixie
+Talk with her normally - restores sanity, raises affection slightly, little better if you have family knowledge. may refuse if hate high enough.
+Perhaps better if ignored for a long time? ie She's desperate for attention.
+Ask her what she needs - hints and tips for players
+Insult her - breaks will, to a point.
+if sadistic
+Threaten Trixie's family if she disobeys - minor break, one time deal.
+Threaten brother - ineffective unless post-incest, in which case effective for minor break
+
+Punish Trixie
+Tickle Trixie - could wet herself if done multiple times a day? (no, too complicated)
+Spank Trixie - raises lust, good obedience boost later (she secretly likes this one, doesn't boost sadism)
+Whip Trixie - good obedience boost
+Beat Trixie - good for will breaking, too much opens savage beating option, which works well but is dangerous and breaks good ends
+Savagely beat Trixie - as above
+Strangle her
+
+Molest Trixie
+Kiss her - raises affection if she's almost broken.
+Masturbate Trixie
+Lick Trixie's cunt
+Come on Trixie's face
+Bukkake on Trixie if cum pill enabled
+
+Sex Toys
+Use vibe on cunt
+Use vibe in ass
+Dildo
+Insert Anal beads
+Insert/Remove Anal plug
+Insert/Remove Anal Vibe
+Insert/Remove Vibe
+Administer enema - choose to have her expel or leave plugged until released
+
+Bondage:
+Blinder
+Ball Gag
+Fetters
+
+Get oral is already done
+
+Fuck Trixie
+Request her to raise her tail
+Demand she raises her tail or else
+Rape her
+
+
+Take Anal
+Request her to raise her tail
+Demand she raises her tail or else
+Rape her
+
+Special Items
+Magic branding iron
+Horn cutter
+Fertility pill
+Cum pill
+Lust piercing

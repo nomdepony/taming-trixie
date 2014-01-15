@@ -1,0 +1,177 @@
+:: StoryTitle
+Taming Trixie
+
+:: remove_extra [stylesheet]
+#credits, #version { 
+  display: none;
+}
+
+body {
+  max-width: 80em;
+}
+
+:: PassageDone
+<<if $debug>>
+  <<append ".footer">><<print JSON.stringify(state.active.variables, undefined, 2)>><<endappend>>
+<<endif>>
+
+:: MenuStory
+<<click "Debug">><<set $debug = !$debug>>
+<<if $debug>>
+  <<append ".footer">><<print JSON.stringify(state.active.variables, undefined, 2)>><<endappend>>
+<<else>>
+  <<replace ".footer">><</replace>>
+<<endif>><</click>>
+
+:: storyHelpers [widget nobr]
+<<widget "Master">><<print $master_name>><</widget>>
+<<widget "Trixie">><<print $trixie_name>><</widget>>
+
+:: initial_setup [nobr]
+<<set $debug = false>>
+<<set $day = 1>>
+<<set $weekend = false>>
+<<set $actions = 6>>
+<<set $action_taken = false>>
+
+<<set $food = -1>>
+
+<<set $will = 800>> /% Make it abnormally high for the first day %/
+<<set $lust = 0>>
+<<set $health = 100>>
+<<set $hunger = 80>>
+
+<<set $master_name = "Master">>
+<<set $trixie_name = "Trixie">>
+
+<<set $overnight = false>>
+
+<<set $gag = false>>
+<<set $blindfold = false>>
+<<set $spreader = false>>
+
+<<set $toys = {
+    vaginal: false,
+    anal: false,
+    enema: false
+}>>
+
+<<set $marks = {
+    filth: 30,
+    cum: false,
+    piss: false,
+    spankings: [],
+    whippings: [],
+    bruises: []
+}>>
+
+<<set $crimes = {
+    assault: 0,
+    sexual_assault: 0,
+    rape: 0,
+    incest: false,
+    brother_threats: false,
+    family_threats: false
+}>>
+
+<<set $pc = {
+    sadism: 0,
+    affection: 0,
+    shots_left: 1,
+    shots_per_night: 1,
+    bladder_full: true
+}>>
+
+<<set $training = {
+    oral: 0,
+    vaginal: 0,
+    anal: 0
+}>>
+
+<<set $items = {
+    bits: 500,
+    horn_cutter: false,
+    enema: false,
+    catheter: false,
+    fertility_pill: false,
+    cum_pill: false,
+    lust_piercing: false,
+    branding_iron: false
+}>>
+
+<<set $body = {
+    weight: 100,
+    libido: 10,
+    virgin: true,
+    vaginal_gape: 0,
+    anal_gape: 0,
+    damaged_horn: false,
+    docked: false,
+    pierced: false,
+    branded: false,
+    pregnant: false,
+    bladder_full: true
+}>>
+
+<<set $mind = {
+    pride: 95,
+    sanity: 95,
+    obedience: 0,
+    hate: 25,
+    love: 0,
+    mindless: false,
+    hope: true,
+    break_one: false,
+    break_two: false,
+    break_major: false
+}>>
+
+<<set $visits = {
+    brother: 0,
+    family: -1,
+    saddle: -1,
+    tirek: -1
+}>>
+
+
+:: configsetup [script]
+config.displayPassageTitles = false;
+config.disableHistoryControls = false;
+config.saves.autosave = "savenow";
+config.saves.isAllowed = function() {
+    return true;  // Disable when not debug
+    if (tale.get(state.active.title).tags.indexOf("cansave") != -1) {
+        return true;
+    } else
+        return false;
+};
+
+:: replacelinksheet [stylesheet]
+.revision-span-in { opacity: 0; }
+.revision-span:not(.revision-span-out) { transition: 0.4s; -webkit-transition: 0.4s; }
+.revision-span-out { position: absolute; opacity: 0; }
+
+:: replacelinkjs [script]
+/*! <<replacelink>> macro set for SugarCube */
+(function(){var requiredSugarCubeBuild=2680;if(!version||!version.build||version.build<requiredSugarCubeBuild)throw new Error("<<replacelink>> macro set requires SugarCube build "+requiredSugarCubeBuild+" or greater, aborting load");version.extensions["replacelinkMacroSet"]={major:1,minor:1,revision:2};function showVer(n,notrans){n.innerHTML="";new Wikifier(n,n.tweecode);n.setAttribute("data-enabled","true");n.style.display="inline";n.classList.remove("revision-span-out");if(!notrans){n.classList.add("revision-span-in");
+if(n.timeout)clearTimeout(n.timeout);n.timeout=setTimeout(function(){n.classList.remove("revision-span-in");n=null},1)}}function hideVer(n,notrans){n.setAttribute("data-enabled","false");n.classList.remove("revision-span-in");if(n.timeout)clearTimeout(n.timeout);if(!notrans){n.classList.add("revision-span-out");n.timeout=setTimeout(function(){if(n.getAttribute("data-enabled")==="false"){n.classList.remove("revision-span-out");n.style.display="none";n.innerHTML=""}n=null},1E3)}else{n.style.display=
+"none";n.innerHTML="";n=null}}function tagcontents(b,starttags,desttags,endtags,k){function tagfound(i,e){for(var j=0;j<e.length;j++)if(a.indexOf("<<"+e[j],i)===i)return e[j]}var l=0,c="",tg,a=b.source.slice(k);for(var i=0;i<a.length;i++){if(tg=tagfound(i,starttags))l++;else if((tg=tagfound(i,desttags))&&l===0){b.nextMatch=k+i+tg.length+4;return[c,tg]}else if(tg=tagfound(i,endtags)){l--;if(l<0)return null}c+=a.charAt(i)}return null}function revisionSpanHandler(g,e,f,b){function mkspan(vtype){h=insertElement(m,
+"span",null,"revision-span "+vtype);h.setAttribute("data-enabled",false);h.style.display="none";h.tweecode="";return h}var k=b.source.indexOf(">>",b.matchStart)+2,vsns=[],vtype=e,flen=f.length,becomes,c,cn,m,h,vsn;if(this.shorthand&&flen)while(f.length>0)vsns.push([f.shift(),this.flavour==="insert"?"gains":"becomes"]);else if(this.flavour==="insert"||this.flavour==="continue"&&this.trigger==="time")vsns.push(["","becomes"]);if(this.flavour==="continue"&&flen){b.nextMatch=k+b.source.slice(k).length;
+vsns.push([b.source.slice(k),vtype])}else{becomes=["becomes","gains"];c=tagcontents(b,begintags,becomes.concat(endtags),endtags,k);if(c&&endtags.indexOf(c[1])===-1){while(c){vsns.push(c);c=tagcontents(b,begintags,becomes,endtags,b.nextMatch)}c=tagcontents(b,begintags,["/"+e,"end"+e],endtags,b.nextMatch)}if(!c){throwError(g,"<<"+e+">>: cannot find a matching close tag");return}vsns.push(c);if(this.flavour==="continue"){k=b.nextMatch;b.nextMatch=k+b.source.slice(k).length;vsns.push([b.source.slice(k),
+""])}}if(this.flavour==="remove")vsns.push(["","becomes"]);cn=0;m=insertElement(g,"span",null,e);m.setAttribute("data-flavour",this.flavour);h=mkspan("initial");vsn=vsns.shift();h.tweecode=vsn[0];showVer(h,true);while(vsns.length>0){if(vsn)vtype=vsn[1];vsn=vsns.shift();h=mkspan(vtype);h.tweecode=vsn[0]}if(typeof this.setup==="function")this.setup(m,g,e,f)}function quantity(m){return m.children.length-1+(m.getAttribute("data-flavour")==="remove"?1:0)}function revisionSetup(m,g,e,f){m.className+=" "+
+f[0].replace(" ","_")}function keySetup(m,g,e,f){var fl=this.flavour,key=f[0];m.setEventListener("keydown",function l(e){var done=!revise("revise",m);if(done)m.removeEventListener("keydown",l)})}function timeSetup(m,g,e,f){function cssTimeUnit(s){if(typeof s==="string")if(s.slice(-2).toLowerCase()==="ms")return Number(s.slice(0,-2))||0;else if(s.slice(-1).toLowerCase()==="s")return Number(s.slice(0,-1))*1E3||0;throwError(g,"<<"+e+'>>: "'+s+'" is not a valid CSS time unit');return 0}var fl=this.flavour;
+var tm=cssTimeUnit(f[0]);setTimeout(function timefn(){var done=!revise("revise",m);if(!done)setTimeout(timefn,tm)},tm)}function hoverSetup(m){m.onmouseover=function(){revise("revise",this)};m.onmouseout=function(){revise("revert",this)};m=null}function mouseSetup(m){var fl=this.flavour,evt=window.onmouseenter===null?"onmouseenter":"onmouseover";m[evt]=function(){var done=!revise("revise",this);if(done)this[evt]=null};m=null}function linkSetup(m,g,e,f){var fl=this.flavour,l=Wikifier.createInternalLink(),
+p=m.parentNode;l.className="link-internal replaceLink";p.insertBefore(l,m);l.insertBefore(m,null);l.onclick=function(){var p,done=false;if(m&&m.parentNode==this){done=!revise("revise",m);scrollWindowTo(m)}if(done){this.parentNode.insertBefore(m,this);this.parentNode.removeChild(this)}};l=null}function visitedSetup(m,g,e,f){var done,sav=state.active.variables,os="once seen",d=m.firstChild&&(this.flavour==="insert"?m.firstChild.nextSibling:m.firstChild).tweecode;sav[os]=sav[os]||{};if(d&&!sav[os].hasOwnProperty(d))sav[os][d]=
+1;else{for(var i=sav[os][d];i>0&&!done;i--)done=!revise("revise",m,true);if(sav[os].hasOwnProperty(d))sav[os][d]+=1}}function insideDepartingSpan(elem){var r=elem.parentNode;while(!r.classList.contains("passage")){if(r.classList.contains("revision-span-out"))return true;r=r.parentNode}}function reviseAll(rt,rname){var rall=document.querySelectorAll(".passage ."+rname),ret=false;for(var i=0;i<rall.length;i++)if(!insideDepartingSpan(rall[i]))ret=revise(rt,rall[i])||ret;return ret}function revise(rt,
+r,notrans){function doToGainerSpans(n,fn){for(var k=n-1;k>=0;k--)if(rc[k+1].classList.contains("gains"))fn(rc[k],notrans);else break}var ind2,curr,next,ind=-1,rev=rt==="revert",rnd=rt.indexOf("random")>-1,fl=r.getAttribute("data-flavour"),rc=r.childNodes,cyc=fl==="cycle",rcl=rc.length-1;for(var k=0;k<=rcl;k++)if(rc[k].getAttribute("data-enabled")==="true")ind=k;if(rev)ind-=1;curr=ind>=0?rc[ind]:cyc?rc[rcl]:null;ind2=ind;if(rnd)ind2=(ind+Math.floor(Math.random()*rcl))%rcl;next=ind2<rcl?rc[ind2+1]:
+cyc?rc[0]:null;var docurr=rev?showVer:hideVer;var donext=rev?hideVer:showVer;var currfn=function(){if(!(next&&next.classList.contains("gains"))||rnd){docurr(curr,notrans);doToGainerSpans(ind,docurr,notrans)}};var nextfn=function(){donext(next,notrans);if(rnd)doToGainerSpans(ind2+1,donext,notrans)};if(!rev){currfn();nextfn()}else{nextfn();currfn()}return cyc?true:rev?ind>0:ind2<rcl-1}var begintags=[],endtags=[];[{name:"insertlink",flavour:"insert",trigger:"link",setup:linkSetup},{name:"timedinsert",
+flavour:"insert",trigger:"time",setup:timeSetup},{name:"insertion",flavour:"insert",trigger:"revisemacro",setup:revisionSetup},{name:"later",flavour:"insert",trigger:"visited",setup:visitedSetup},{name:"keyinsert",flavour:"insert",trigger:"key",setup:keySetup},{name:"replacelink",flavour:"replace",trigger:"link",setup:linkSetup},{name:"timedreplace",flavour:"replace",trigger:"time",setup:timeSetup},{name:"mousereplace",flavour:"replace",trigger:"mouse",setup:mouseSetup},{name:"hoverreplace",flavour:"replace",
+trigger:"hover",setup:hoverSetup},{name:"revision",flavour:"replace",trigger:"revisemacro",setup:revisionSetup},{name:"keyreplace",flavour:"replace",trigger:"key",setup:keySetup},{name:"timedremove",flavour:"remove",trigger:"time",setup:timeSetup},{name:"mouseremove",flavour:"remove",trigger:"mouse",setup:mouseSetup},{name:"hoverremove",flavour:"remove",trigger:"hover",setup:hoverSetup},{name:"removal",flavour:"remove",trigger:"revisemacro",setup:revisionSetup},{name:"once",flavour:"remove",trigger:"visited",
+setup:visitedSetup},{name:"keyremove",flavour:"remove",trigger:"key",setup:keySetup},{name:"continuelink",flavour:"continue",trigger:"link",setup:linkSetup},{name:"timedcontinue",flavour:"continue",trigger:"time",setup:timeSetup},{name:"mousecontinue",flavour:"continue",trigger:"mouse",setup:mouseSetup},{name:"keycontinue",flavour:"continue",trigger:"key",setup:keySetup},{name:"cycle",flavour:"cycle",trigger:"revisemacro",setup:revisionSetup},{name:"mousecycle",flavour:"cycle",trigger:"mouse",setup:mouseSetup},
+{name:"timedcycle",flavour:"cycle",trigger:"time",setup:timeSetup},{name:"keycycle",flavour:"replace",trigger:"key",setup:keySetup}].forEach(function(e){e.handler=revisionSpanHandler;e.shorthand=["link","mouse","hover"].indexOf(e.trigger)>-1;macros[e.name]=e;macros.registerTags(e.name);begintags.push(e.name);endtags.push("/"+e.name,"end"+e.name)});macros["revertlink"]=macros["reviselink"]=macros["randomiselink"]=macros["randomizelink"]={handler:function(a,b,c){function disableLink(l){l.style.display=
+"none"}function enableLink(l){l.style.display="inline"}function updateLink(l){if(l.className.indexOf("random")>-1){enableLink(l);return}var rall=document.querySelectorAll(".passage ."+rname),cannext,canprev,ind,r,fl;for(var i=0;i<rall.length;i++){r=rall[i],fl=r.getAttribute("data-flavour");if(insideDepartingSpan(r))continue;if(fl==="cycle")cannext=canprev=true;else{if(r.firstChild.getAttribute("data-enabled")==="false")canprev=true;if(r.lastChild.getAttribute("data-enabled")==="false")cannext=true}}var can=
+l.classList.contains("revert")?canprev:cannext;(can?enableLink:disableLink)(l)}function toggleText(w){w.classList.toggle(rl+"Enabled");w.classList.toggle(rl+"Disabled");w.style.display=w.style.display==="none"?"inline":"none"}if(c.length<2){throwError(a,"<<"+b+">>: insufficient arguments (requires at least 2)");return}var l,rev,rname,rl="reviseLink",v="",end=false,out=false;rname=c.shift().replace(" ","_");l=Wikifier.createInternalLink(a,null);l.className="link-internal "+rl+" "+rl+"_"+rname+" "+
+b;if(c.length>1&&c[0][0]==="$"){v=c[0].slice(1);c.shift()}switch(c[c.length-1]){case "end":end=true;c.pop();break;case "out":out=true;c.pop();break}var h=state.active.variables;for(var i=0;i<c.length;i++){var on=i===Math.max(c.indexOf(h[v]),0),d=insertElement(null,"span",null,rl+(on?"En":"Dis")+"abled");if(on){h[v]=c[i];l.setAttribute("data-cycle",i)}else d.style.display="none";insertText(d,c[i]);l.appendChild(d)}l.onclick=function(){reviseAll(b,rname);var t=this.childNodes,u=this.getAttribute("data-cycle")-
+0,m=t.length,lall;if((end||out)&&u===m-(end?2:1))if(end){var n=this.removeChild(t[u+1]);n.className=rl+"End";n.style.display="inline";this.parentNode.replaceChild(n,this)}else{this.parentNode.removeChild(this);return}else{toggleText(t[u]);u=(u+1)%m;if(v)h[v]=c[u];toggleText(t[u]);this.setAttribute("data-cycle",u)}lall=document.getElementsByClassName(rl+"_"+rname);for(var i=0;i<lall.length;i++)updateLink(lall[i])};l=null}};macros["mouserevise"]=macros["hoverrevise"]={handler:function(a,b,c,d){var endtags=
+["/"+b,"end"+b],evt=window.onmouseenter===null?"onmouseenter":"onmouseover",t=tagcontents(d,[b],endtags,endtags,d.source.indexOf(">>",d.matchStart)+2);if(t){var rname=c[0].replace(" ","_"),h=insertElement(a,"span",null,"hoverrevise hoverrevise_"+rname),f=function(){var done=!reviseAll("revise",rname);if(b!="hoverrevise"&&done)this[evt]=null};new Wikifier(h,t[0]);if(b==="hoverrevise"){h.onmouseover=f;h.onmouseout=function(){reviseAll("revert",rname)}}else h[evt]=f;h=null}}};macros.registerTags("mouserevise");
+macros.registerTags("hoverrevise");macros["instantrevise"]={handler:function(a,b,c,d){reviseAll("revise",c[0].replace(" ","_"))}}})();

@@ -1,0 +1,156 @@
+:: Endings Gallery [nobr]
+<<if $ending_walked_away>>
+Good End - Walked Away<br>
+<<else>>
+Good End - XXXXXX XXXX<br>
+<<endif>>
+<<if $ending_fatal_punishment>>
+Bad End - Fatal Punishment<br>
+<<else>>
+Bad End - XXXXX XXXXXXXXXX<br>
+<<endif>>
+<<back>>
+
+
+:: Bad End - Fatal Punishment [ending]
+Trixie has died of her injuries at your hoof. Perhaps it was an accident, perhaps you meant to do it, but either way she's dead.
+
+TOO VIOLENT END
+<<remember $ending_fatal_punishment = true>>
+[[Play Again|Start][start.restart()]]
+
+
+:: Good End - Walked Away [ending]
+You continue on with your life, focusing mostly on work. Occasionally you see a poster for Trixie's show, or listen to a colleague's story about the bold blue magician, and wonder who you would have been if you choose differently that night. You don't know, and the thought of using the dusty room in your basement still holds a certain excitement, but you're sure this was the best thing you could do.
+
+GOOD PONY END
+<<remember $ending_walked_away = true>>
+[[Play Again|Start][state.restart()]]
+
+
+:: noteEndings
+Below here is broken.
+
+
+:: BADENDUpsetFamily [ending]
+%you go home to sleep, woken up in the middle of the night by guards - they catch you, game over.
+<<BEND>>
+
+:: BADENDLetGoEarly [ending]
+%you blindfold her, take her outside, and tell her you're letting her go. she runs off. she may kill herself.
+if she's mindless, you don't let her go, you just knock her unconscious and leave her somewhere.
+unless you threatened her family AND you have a reputation for honesty, the cops come back.
+you get judged based on your crimes.
+<<BEND>>
+
+:: BADENDSnuffed [ending]
+%you loop a garotte around her neck, and tighten it. various reactions based on her state, such as mindless, then she's dead.
+special achievement for mercy killing mindless trixie.
+<<BEND>>
+
+:: BADENDInjuries [ending]
+%trixie dies of her injuries. maybe accident, maybe meant it, but dead.
+<<BEND>>
+
+:: BADENDDuringTheNight [ending]
+%trixie dies during the night due to a combination of her poor health and hunger.
+<<BEND>>
+
+:: ENDKeepHer [nobr]
+<<if $mindbreak_major>>
+    <<GOODENDClaimHer>>
+<<else>>
+    <<BADENDClaimHer>>
+<<endif>>
+
+:: GOODENDClaimHer [ending]]
+%you claimed her for your own and she's broken. she's yours good job.
+quality depends on her stats etc.
+
+:: BADENDTooLong [ending]
+% she laughs it off/denies it, you admit the truth, you go to sleep.
+<<BADENDTooLong>>
+
+:: ENDTooLong [nobr]
+<<if $mindbreak_major>>
+    <<GOODENDTooLong>>
+<<else>>
+    <<BADENDTooLong>>
+<<endif>>
+
+:: GOODENDTooLong [ending]]
+%you didn't claim her for your own, but she's broken. she's yours.
+<<OKEND>>
+
+:: BADENDTooLong [ending]
+%took too long to break her. if horn is fine, she uses magic. if hate's high enough,
+she kills you. If not, depending on pride and love she enslaves YOU or turns you into guards
+if her horn is gone, she kills herself.
+<<BEND>>
+
+
+:: GOODENDSexSlaveSold [ending]
+% noble buys her, takes her back to his sex dungeon/drags if lustmindless. you come and visit/fuck her
+every so often. got paid a good amount, depends on quality.
+<<GEND>>
+
+
+:: GOODENDForeignProstitute [ending]
+% trader buys her, sells her to brothel in far off Saddle Arabia. you get paid a lot.
+<<GEND>>
+
+
+:: GOODENDForeignConsort [ending]
+% trader buys her, sells her to a prince. you get paid shitloads
+<<BESTEND>>
+
+:: BADENDFood [ending]
+% Bark the diamond dogs buys her, sells her to be eaten by diamond dogs.
+achievement if you sell a fully broken trixie as food - she cries out to master, not Celestia. diamond dog offers to let you watch in this case.
+if she still has her horn, it's sent back to you as a reminder. if not, you hope she's still alive. she's not.
+<<BEND>>
+
+:: GOODENDCartPony [ending]
+% Bark the diamond dogs buys her, sells her to be worked as a mine pony until she expires.
+<<OKEND>>
+
+:: GOODENDGemHunter [ending]
+% Bark the diamond dog buys her, sells her to hunt gems.
+<<GEND>>
+
+:: BADENDTirekCult [ending]
+% sacrificed to Tirek
+<<BEND>>
+
+:: BADENDTirekCultTrixie [ending]
+% you AND Trixie sacrified to Tirek
+<<BEND>>
+
+:: BADENDCaughtByBrother [ending]
+% irregardless of why caught, he kills you with magic lasers from his horn pew pew
+<<BEND>>
+
+:: BEND
+
+BAD END
+
+[[Try Again|Start]]
+
+:: OKEND
+
+OK END
+
+[[Try Again|Start]]
+
+:: GEND
+
+GOOD END
+
+[[Try Again|Start]]
+
+
+:: BESTEND
+
+BEST END
+
+[[Try Again|Start]]

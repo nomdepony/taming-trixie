@@ -1,0 +1,226 @@
+:: Give Up
+As you look at Trixie, you feel a touch of remorse at what you've done. Maybe this isn't what you want. Maybe you've fucked up. For some reason, the idea of giving up on this seems attractive.
+
+==Kill her==
+==Let her go==
+[[Change your mind and continue|Back Into Action]]
+
+:: Back Into Action
+You shake your head, driving out any thoughts of giving up. You wanted to do this. You abducted her. [[And you're going to finish it.|Training]]
+
+
+:: noteTraining
+Below here is broken.
+
+:: Randomly Punish Trixie
+On a whim, you decide to punish Trixie.
+
+==Tickle her==
+==Spank her==
+==Whip her==
+[[Beat her|Beating Her][$actions -= 1]]
+<<if $pc.sadism gte 6>>Strangle her<<endif>>
+
+[[Change your mind|Training]]
+
+:: demand_refused_punishments
+==Tickle her==
+==Spank her==
+==Whip her==
+[[Beat her|Beating Her]]
+<<if $pc.sadism gte 6>>Strangle her<<endif>>
+
+
+
+
+:: Get Oral [nobr]
+You decide to have Trixie pleasure you orally.<br>
+[[Ask her to blow you|Oral Request][$actions -= 1]]<br>
+[[Demand she sucks you off or else|Oral Demanded][$actions -= 1]]<br>
+==Rape her mouth==<br>
+[[Change your mind|Training]]
+
+:: Oral Request [nobr]
+<<set $thoughts = ["her servicing you with her mouth.", "her swallowing your seed."]>>
+You walk over to Trixie, erection growing out of your sheath at the thought of <<print $thoughts.random()>>
+You stop with your haunch near her face. "Trixie!" you shift your hips, making the tip dance in front of her. "I want you to suck it."<br><br>
+
+<<if $mindbreak_major>>
+	Trixie closes her eyes and bows her head. "Of course, Master."<br>
+    <<display oral_performed>>
+    <<set $obedience += 3>><<set $oral_training += 4>>
+<<elseif $will gt 150>>
+    <<if $mindbreak_two>>
+        Trixie backs away from you slowly. "Master, please, Trixie doesn't want to."<br>
+    <<elseif $hope>>
+        Trixie sniffs and spins away, not even looking at you. "As if Trixie would ever touch you, kidnapper. The guards will punish you for this."<br>
+    <<else>>
+        Trixie backs off, holding a hoof up to block the sign of your cock. "Trixie.. Trixie refuses."<br>
+    <<endif>>
+<<else>>
+    <<if $mindbreak_two>>
+        Trixie closes her eyes and bows her head. "O... okay Master. Please be gentle."<br>
+        <<display oral_performed>>
+        <<set $obedience += 3>><<set $oral_training += 4>>
+    <<else>>
+        Trixie says nothing for a second, and then bows her head. "Trixie... has no choice."<br>
+        <<display oral_performed>>
+        <<set $obedience += 3>><<set $oral_training += 4>>
+    <<endif>>
+<<endif>>
+<br>[[Return to training|Training]]
+<<unset $thoughts>>
+
+:: oral_performed [nobr]
+<br>
+<<if $oral_training gte 50>>
+   With a smooth confident movement, Trixie pushes her head under your belly and starts to bob up and down on your dick. You groan as she works you expertly. When you cum in her mouth, she sticks her tongue out, showing you your seed, before swallowing every drop.
+<<elseif $oral_training gte 25>>
+   Trixie pushes her face up against your dick, rubbing her soft lips against the head. She holds it up with one hoof, takes a breath, and starts sucking it with skill. You finish in her mouth, and she's about to spit it out when you shake your head. "Swallow it." She does.
+<<elseif $oral_training gte 10>>
+   Trixie reaches down and strokes your dick with her hoof a few times, then opens her mouth. Sticking her tongue out, she slowly guides your cock inside her mouth, then starts to bob her head up and down your shaft. You don't orgasm, but you're satisfied when she stops.
+<<else>>
+    Trixie reaches out, and places a trembling hoof on your dick, pulling it towards her.
+    <<if $oral_training eq 0>>
+        <br>She pauses for a second. "Trixie... has never done this before."<br>
+    <<endif>>
+    She licks it a few times, and then starts to mouth the tip, scraping it occassionally with her teeth. She fumbles through the rest of the blowjob, and you're left unsatisfied when she finishes.
+    /% if sadistic, cuff her and tell her she'll do a better job next time or you'll pull her teeth out %/
+<<endif>>
+<br>
+
+:: Oral Demanded [nobr]
+<<set $thoughts = ["her servicing you with her mouth.", "her swallowing your seed."]>>
+<<set $punishment_threats = ["I'll make you regret it.", "be punished.", "I'll teach you to behave."]>>
+You walk over to Trixie, erection growing out of your sheath at the thought of <<print $thoughts.random()>>
+You grab her head by the horn and push it towards your hanches. "Trixie, suck me off, or <<print $punishment_threats.random()>>". You let go of her and press in closer. "Get to it."
+<br><br>
+<<if $mindbreak_major>>
+	Trixie closes her eyes and bows her head. "Trixie will obey, Master."<br>
+    <<display oral_performed>>
+    <<set $obedience += 2>><<set $oral_training += 3>>
+    <br>[[Return to training|Training]]
+<<elseif $will gt 300>>
+    <<if $mindbreak_two>>
+	Trixie covers her face with her hooves. "Please, Master, don't hurt Trixie."<br>
+    <<elseif $hope>>
+	    Trixie stumbles a little, but returns to her earlier arrogance. "You wouldn't dare!"<br>
+    <<else>>
+        Trixie sobs a little and shakes her head. "No, no no no!"<br>
+    <<endif>>
+    <br><<display demand_refused_punishments>>
+<<else>>
+    <<if $mindbreak_two>>
+        Trixie gulps. "Very well... Master."<br>
+        <<display oral_performed>>
+        <<set $obedience += 2>><<set $oral_training += 3>>
+    <<else>>
+        Trixie sobs once, then lowers her head. "Don't punish me..."<br>
+        <<display oral_performed>>
+        <<set $obedience += 2>><<set $oral_training += 3>>
+    <<endif>>
+    <br>[[Return to training|Training]]
+<<endif>>
+<<unset $thoughts>><<unset $punishment_threats>>
+
+:: Forced Oral [nobr]
+%ORALRAPE text - vary reaction based on different things
+[[Training]]
+<<set $oral_training += 2>><<set $sadistic += 1>>
+
+:: Beating Her [nobr]
+<<if visited("Beating Her") eq 1>>
+You raise your hoof and slam it down in front of Trixie. "You know, I am a patient pony." She backs off slightly, and you move after her. "But if there's one thing I can't stand,
+it's disobedience."<br><br>
+<<else>>
+You shake your head sadly. "Trixie, Trixie, Trixie." You raise your hoof, and she stares at it, remembering her earlier beatings. "You just don't learn, do you?"<br><br>
+You slam your hoof down on the ground, making her flinch. "Maybe you'll do better this time.<br><br>
+<<endif>>
+You start off by smacking her in the face. She cries out and covers it with a hoof, leaving her open for a followup blow striking her in the barrel.<br><br>
+She falls on her side, wind knocked out of her.
+<<if $mindbreak_major or $mindbreak_two>>She looks up at you submissively with hopeful eyes. "Master, don't! Trixie is yours already!" You land a blow on her leg, and she cries out.<br><br>
+"Obviously the lessons didn't stick."
+<<elseif $hope>>
+She looks up at you with angry eyes. "Bastard! Trixie will see you punished for this!" You land a blow on her face, and she wails out in pain.<br><br>
+"Rescue's not coming, Trixie, no matter how much you hope for it."
+<<else>>
+She looks up at you with sad eyes. "Why... why are you doing this to Trixie?" You land a blow on her side again, and she curls up, tears starting to form in her eyes.<br><br>
+"Because you don't learn your place."
+<<endif>>
+<br><br>
+You lay into her, striking her over and over again, taking care to pull your blows slightly. When you finally pull back from her, hoof shaking, she's sobbing, begging you to stop even though you already have.
+<br><br>
+<<if $assault gte 2>>[[Continue beating her|Savage Beating]]<br>
+<<endif>>
+[[Return to training|Training]]<<set $health -=10>><<set $hate += 5>><<set $assault += 1>><<set $will -= 100>>
+
+:: Savage Beating
+Your heart's racing in your chest, and the way she dares to tell you to stop infuriates you. "Shut up, you cunt!" You jump on her, kicking and stomping. She flails, trying to throw you off, and you grab her hoof and press it down, crushing it beneath your weight.
+
+Trixie screams as you grind her leg against the ground. When you grow tired of that, you roll her on her back and thrust a hoof into her soft belly. "You're a slave now, Trixie." You smack her in the face, splitting her lip. "My slave." Another blow to the stomach, and she starts making silent pleas for mercy, afraid to talk out loud.
+
+You give her none.
+
+Finally, your rage subsides, and you step away from her, panting in exhaustion. "Have you learned your lesson yet?"<<set $health -= 20>><<set $hate += 10>><<set $savage += 1>><<set $message = false>>
+<<silently>>\
+<<if not $mindbreak_one or not $mindbreak_two>>
+    <<set $message = 'Trixie doesn\'t respond at first. Finally, she rolls over and stands up slowly, wincing. "Yes, Trixie will be a good pony."'>>
+    <<set $sanity -= 25>>
+    <<if not $mindbreak_one>>
+        <<set $mindbreak_one = "savage">><<set $hope = false>>
+    <<elseif not $mindbreak_two>>
+        <<set $mindbreak_two = "savage">>
+	<<set $message += ' She pauses for a second, and then slowly repeats herself. "Trixie will be a good pony, Master."'>>
+    <<endif>>
+<<elseif not $mindbreak_major and $savage gte 3>>
+    <<set $message = 'Trixie gets up slowly, bowing to you. "Yes, Master. Trixie is sorry you had to teach her."'>>
+    <<set $mindbreak_major = "repeated_savage">>
+    <<set $sanity -= 40>>
+<<else>>
+    <<set $message = 'Trixie gets up slowly. "Yes, Master. Trixie is sorry you had to teach her again."'>>
+<<endif>>
+<<endsilently>>
+<<if $health lte 0>>\
+    Trixie doesn't respond, and you look closely at her. [[She's not breathing.|Bad End - Fatal Punishment]]\
+<<else>>\
+    <<if $message>><<print $message>><<endif>><br><br>\
+    [[Return to training|Training]]
+<<endif>>
+<<unset $message>>
+
+
+:: training_oral [nobr]
+% you feel like some oral.
+<<if not $mindless>>
+    [[Ask for oral|oral_request][$actions -= 1]]<br>
+    [[Demand oral|oral_demand][$actions -= 1]]<br>
+    [[Rape her mouth|oral_force][$actions -= 1]]<br>
+    [[Change your mind|Training]]
+<<else if $mindless eq "lust">>
+    %you wave it in front of trixie's mouth, and she greedily grabs onto it. <br>
+    %range of responses based on oral training
+    [[Continue|Training][$actions -= 1]]<<set $oral_training += 1>>
+<<else if $mindless eq "rage">>
+    %you refuse. she's already foaming at the mouth. you're not sticking your dick in there.<br>
+    [[Continue|Training]]
+<<else>>
+    % you hold her mouth open and fuck it.
+    [[Continue|Training]]
+<<endif>>
+
+
+:: training_equipment
+<<if not $horn_damage>>Use on Trixie's horn: [[hammer|hammer]] <<if $horn_cutter>>[[horn cutter|horn_cutter]]<<endif>><br><<endif>>\
+<<if not $branded and $magic_branding_iron>>[[Brand Trixie|trixie_branded]]<br><<endif>
+
+:: trixie_branded
+% you cover her cutie marks with your brand - a set of silver hoofcuffs. she cries. mindbreak missing.
+[[Continue|Training][$actions -= 1]]<<set $branded = true>>
+
+:: hammer
+% you break her horn in half with the hammer. fucked up. mindbreak major missing.
+[[Continue|Training][$actions -= 1]]<<set $horn_damage = "broken">>
+
+:: horn_cutter
+% you cut her horn off near the base. fucked up. mindbreak major missing. hey, new special dildo!
+[[Continue|Training][$actions -= 1]]<<set $horn_damage = "cut">>
