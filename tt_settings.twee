@@ -17,11 +17,8 @@ body {
 
 :: MenuStory
 <<click "Debug">><<set $debug = !$debug>>
-<<if $debug>>
-  <<append ".footer">><<print JSON.stringify(state.active.variables, undefined, 2)>><<endappend>>
-<<else>>
-  <<replace ".footer">><</replace>>
-<<endif>><</click>>
+<<script>>state.display(state.active.title, null, "back")<</script>>
+<</click>>
 
 :: storyHelpers [widget nobr]
 <<widget "Master">><<print $master_name>><</widget>>
